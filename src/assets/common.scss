@@ -1,0 +1,143 @@
+$green: #f8f9f8;
+$blue: #d5e5f4;
+
+.spacer {
+  width: 10px;
+  height: 10px;
+}
+
+$gridMinWidth: 100%;
+$gridMinHeight: 600px;
+
+$screen-medium: 1500px;
+
+.search-form {
+  border: 2px solid #9db6c9;
+  background: #f9fafc;
+  padding: 15px 2%;
+  padding-bottom: 0px;
+  width: 100%;
+  border-radius: 4px;
+  position: relative;
+
+  .form-group {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+    padding-right: 20px;
+    display: flex;
+
+    @media screen and (max-width: $screen-medium) {
+      width: 50%;
+    }
+
+    @media screen and (min-width: $screen-medium + 1) {
+      width: 33%;
+    }
+
+    * {
+      float: left;
+    }
+
+    button.btn-icon {
+      padding: 6px;
+    }
+
+    .control-label:before {
+      content: "-";
+      margin-right: 6px;
+    }
+
+    .control-label {
+      font-family: 'NotoM';
+      min-width: 100px;
+      margin-right: 10px;
+      display: inline-flex;
+      font-size: 15px;
+      color: #222;
+    }
+
+    .form-input {
+      width: 100%;
+      display: inline-flex;
+
+      .search-box {
+        width: 100%;
+        display: inline-flex;
+
+        .input {
+          float: left;
+          width: auto;
+        }
+
+        .input {
+          margin-right: 4px;
+        }
+
+        .input.search-input {
+          padding-right: 25px;
+        }
+
+        .input-group {
+          .btn-icon {
+            padding: 3px 6px;
+            margin: 0;
+            position: absolute;
+            right: 4px;
+          }
+        }
+      }
+
+      .search-box:after {
+        content: " ";
+        display: table;
+        clear: both;
+      }
+
+      .input-group {
+        position: relative;
+      }
+
+      .wave {
+        padding: 0 6px;
+      }
+    }
+  }
+
+  .form-group:after {
+    content: " ";
+    clear: both;
+    display: table;
+  }
+}
+
+.search-form:after {
+  content: " ";
+  clear: both;
+  display: table;
+}
+
+.slip-grid {
+  .xhdr table tbody tr:last-child {
+    background-color: #f9f9f3;
+  }
+
+  .xhdr table tbody tr:last-child td {
+    background-color: transparent !important;
+  }
+
+  .xhdr table tbody tr:last-child td div {
+    background-color: transparent !important;
+    color: inherit !important;
+    text-align: inherit !important;
+  }
+}
+
+table {
+  td.bg-grey {
+    background-color: #e1e1e1;
+  }
+  td.bg-yellow {
+    background-color: #f9f9f3;
+  }
+}

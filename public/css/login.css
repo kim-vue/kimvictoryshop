@@ -1,0 +1,16 @@
+/* main layout */
+.login{display:table; width:100%; justify-content:center; align-items:center;  background:url("../img/bg_login.png") no-repeat center center; background-size:cover;}
+.login .hero-body{display:table-cell!important; vertical-align:middle;}
+.login-box{width:370px; margin:0 auto; background:url("../img/bg_login_title.png") no-repeat center center;}
+.btn-login{background:#f05f52; color:#fff; height:56px; border:none; border-radius:30px; font-size:20px; font-family:"RobotoM";}
+.btn-login:hover{color:#fff;}
+.footer-login{position:absolute; left:0; right:0; bottom:0; width:100%; min-width:1280px; height:59px; line-height:59px; font-size:11px; text-align:center; color:#fff; background:#404040; font-family:'NotoM';}
+.footer-login .copyright{opacity:.5;}
+
+/* custom */
+.card{background-color:transparent; box-shadow:inherit;}
+.card-content{padding:0;}
+.card-content h1.title{margin-bottom:30px;}
+.control.has-icon > input{margin-bottom:18px; padding-left:88px; background:transparent; font-size:16px; border-radius:30px; height:56px; border-color:#fff; color:#fff;}
+.control.has-icon > input::placeholder{color:#fff;}
+.control.has-icon > i{position:absolute; top:20px; left:43px; color:#fff;}

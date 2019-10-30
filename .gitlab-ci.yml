@@ -1,0 +1,36 @@
+stages:
+  - libs
+  - build
+  - deploy
+
+npm:
+  stage: libs
+  only:
+    - master
+  cache:
+    paths:
+      - node_modules
+  script:
+    - npm install
+
+build:
+  stage: build
+  only:
+    - master
+  cache:
+    paths:
+      - dist
+  script:
+    - npm run build
+
+deploy:
+  stage: deploy
+  only:
+    - master
+  cache:
+    paths:
+      - dist
+  script:
+    - sudo cp -r dist /etc/nginx/laser-front
+    - sudo nginx -s reload
+  
