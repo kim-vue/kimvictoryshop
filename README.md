@@ -2,7 +2,11 @@
 ## 사전요건
 * git 설치
 * node.js 설치 및 환경변수 등록
-* [01 개발환경 설정 (VS Code)](http://rnd2.iljincns.co.kr:8888/341002/laser-front/wikis/01-%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD-%EC%84%A4%EC%A0%95-(VS-Code))
+* [01 git  (kimvictoryshop)](https://github.com/kim-vue/kimvictoryshop)
+
+
+
+
 
 
 ## Project setup
