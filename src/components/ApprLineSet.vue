@@ -89,6 +89,7 @@ export default {
   name: "ApprLineSet",
   mixins: [mixin, mixinSlip],
   components: { Layout, Emp, DhxGrid },
+
   props: ["lineList"],
   data() {
     return {
