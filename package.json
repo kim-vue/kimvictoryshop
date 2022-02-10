@@ -55,7 +55,7 @@
         "@vue/test-utils": "^1.0.0-beta.20",
         "chai": "^4.1.2",
         "expose-loader": "^0.7.5",
-        "node-sass": "^4.12.0",
+        "node-sass": "^7.0.0",
         "sass-loader": "^7.0.1",
         "vue-template-compiler": "^2.6.10"
     },
