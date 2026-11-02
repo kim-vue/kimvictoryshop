@@ -111,6 +111,14 @@ class DemoHandler(BaseHTTPRequestHandler):
     server: DemoServer
     server_version = "ZOOMCONNECT/0.1"
 
+    def handle(self):
+        try:
+            super().handle()
+        except (ConnectionAbortedError, ConnectionResetError, BrokenPipeError):
+            # A browser or local client may disconnect during headers or body.
+            # This request cannot receive another response; end it quietly.
+            self.close_connection = True
+
     def log_message(self, format, *args):
         # Do not log request bodies, credentials, cookies or HASH payloads.
         return

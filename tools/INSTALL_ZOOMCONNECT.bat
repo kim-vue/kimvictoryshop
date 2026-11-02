@@ -58,7 +58,7 @@ $ready = $false
 for ($attempt = 0; $attempt -lt 30; $attempt++) {
     if ($server.HasExited) { throw 'The server stopped. Read the server window for the error.' }
     try {
-        $response = Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:8765/' -TimeoutSec 1
+        $response = Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:8765/' -TimeoutSec 5
         if ($response.StatusCode -eq 200 -and $response.Content -match 'ZOOMCONNECT') { $ready = $true; break }
     } catch { }
     Start-Sleep -Milliseconds 500
