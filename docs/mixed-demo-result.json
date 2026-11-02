@@ -1,0 +1,53 @@
+{
+  "workspace": [
+    9,
+    0
+  ],
+  "mixed_slots": [
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      3
+    ],
+    [
+      9,
+      4
+    ]
+  ],
+  "visited_with_same_open": [
+    {
+      "address": [
+        4,
+        0
+      ],
+      "kind": "BRIDGE"
+    },
+    {
+      "address": [
+        1,
+        0
+      ],
+      "kind": "LAYER"
+    },
+    {
+      "address": [
+        7,
+        0
+      ],
+      "kind": "BOOKMARK"
+    }
+  ],
+  "separate_kept_address": true,
+  "separate_kept_target": true,
+  "separated": true,
+  "reconnected_at_same_address": true,
+  "restored": true,
+  "other_actor_still_at_root": true,
+  "audit": {
+    "valid": true,
+    "events": 155
+  }
+}

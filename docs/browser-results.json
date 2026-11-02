@@ -1,0 +1,15 @@
+{
+  "passed": 8,
+  "failed": 0,
+  "checks": [
+    "initial_runtime_state",
+    "url_direct_jump_rejected",
+    "code_uses_real_route_and_history_return",
+    "actor_positions_independent",
+    "bookmark_travels_each_connection",
+    "hash_calculation_13500_and_verified_chain",
+    "mobile_no_horizontal_overflow",
+    "no_uncaught_browser_errors"
+  ],
+  "page_errors": []
+}

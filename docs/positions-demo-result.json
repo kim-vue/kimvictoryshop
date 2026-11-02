@@ -1,0 +1,320 @@
+{
+  "identity": "collection_position:slot_position",
+  "same_address": [
+    1,
+    1
+  ],
+  "before": {
+    "position": 1,
+    "address": [
+      1,
+      1
+    ],
+    "revision": 1,
+    "empty": false,
+    "protected": false,
+    "title": "쿠팡으로 가는 칸",
+    "kind": "REFERENCE",
+    "target": [
+      2,
+      0
+    ],
+    "enabled": true,
+    "traversable": true,
+    "metadata": {}
+  },
+  "after": {
+    "position": 1,
+    "address": [
+      1,
+      1
+    ],
+    "revision": 2,
+    "empty": false,
+    "protected": false,
+    "title": "배민으로 가는 칸",
+    "kind": "REFERENCE",
+    "target": [
+      3,
+      0
+    ],
+    "enabled": true,
+    "traversable": true,
+    "metadata": {}
+  },
+  "stale_selection_rejected": true,
+  "selected_target": [
+    3,
+    0
+  ],
+  "expected_new_target": [
+    3,
+    0
+  ],
+  "code_path_unchanged": true,
+  "calculation": {
+    "contract_version": 1,
+    "parameter_hash": "pos1:f82db23121044df78dca5ae7b53d51be6e7075feb39394f23636a6acb36b93a4",
+    "result": 13500
+  },
+  "cycle_returned_none": true,
+  "parameter_hash": "pos1:f82db23121044df78dca5ae7b53d51be6e7075feb39394f23636a6acb36b93a4",
+  "result_hash": "pos1:03660ab13b6cd9a08e5c0329b99ee4edbed650619c818c6f27606acf8894db0b",
+  "zoombar_collection": {
+    "collection": 8,
+    "address": [
+      8,
+      0
+    ],
+    "revision": 61,
+    "title": "USER 이동 기록",
+    "kind": "ZOOMBAR",
+    "slots": [
+      {
+        "position": 0,
+        "address": [
+          8,
+          0
+        ],
+        "revision": 1,
+        "empty": false,
+        "protected": true,
+        "title": "USER 이동 기록",
+        "kind": "ZOOMBAR",
+        "target": null,
+        "enabled": true,
+        "traversable": false,
+        "metadata": {}
+      },
+      {
+        "position": 1,
+        "address": [
+          8,
+          1
+        ],
+        "revision": 1,
+        "empty": false,
+        "protected": false,
+        "title": "ROOT",
+        "kind": "REFERENCE",
+        "target": [
+          0,
+          0
+        ],
+        "enabled": true,
+        "traversable": false,
+        "metadata": {
+          "previous_frame": null,
+          "target_revision": 1,
+          "via_address": null,
+          "via_revision": null
+        }
+      },
+      {
+        "position": 2,
+        "address": [
+          8,
+          2
+        ],
+        "revision": 1,
+        "empty": false,
+        "protected": false,
+        "title": "배달 목록",
+        "kind": "REFERENCE",
+        "target": [
+          1,
+          0
+        ],
+        "enabled": true,
+        "traversable": false,
+        "metadata": {
+          "previous_frame": 1,
+          "target_revision": 1,
+          "via_address": [
+            0,
+            1
+          ],
+          "via_revision": 1
+        }
+      },
+      {
+        "position": 3,
+        "address": [
+          8,
+          3
+        ],
+        "revision": 1,
+        "empty": false,
+        "protected": false,
+        "title": "쿠팡",
+        "kind": "REFERENCE",
+        "target": [
+          2,
+          0
+        ],
+        "enabled": true,
+        "traversable": false,
+        "metadata": {
+          "previous_frame": 2,
+          "target_revision": 1,
+          "via_address": [
+            1,
+            1
+          ],
+          "via_revision": 1
+        }
+      },
+      {
+        "position": 4,
+        "address": [
+          8,
+          4
+        ],
+        "revision": 1,
+        "empty": false,
+        "protected": false,
+        "title": "배달 목록",
+        "kind": "REFERENCE",
+        "target": [
+          1,
+          0
+        ],
+        "enabled": true,
+        "traversable": false,
+        "metadata": {
+          "previous_frame": 1,
+          "target_revision": 1,
+          "via_address": [
+            0,
+            1
+          ],
+          "via_revision": 1
+        }
+      },
+      {
+        "position": 5,
+        "address": [
+          8,
+          5
+        ],
+        "revision": 1,
+        "empty": false,
+        "protected": false,
+        "title": "배민",
+        "kind": "REFERENCE",
+        "target": [
+          3,
+          0
+        ],
+        "enabled": true,
+        "traversable": false,
+        "metadata": {
+          "previous_frame": 4,
+          "target_revision": 1,
+          "via_address": [
+            1,
+            1
+          ],
+          "via_revision": 2
+        }
+      }
+    ],
+    "metadata": {
+      "cursor": 5,
+      "last_result_hash": "pos1:03660ab13b6cd9a08e5c0329b99ee4edbed650619c818c6f27606acf8894db0b",
+      "root_frame": 1
+    }
+  },
+  "bookmark_collections": [
+    {
+      "collection": 7,
+      "address": [
+        7,
+        0
+      ],
+      "revision": 56,
+      "title": "목적지 책갈피",
+      "kind": "BOOKMARK",
+      "slots": [
+        {
+          "position": 0,
+          "address": [
+            7,
+            0
+          ],
+          "revision": 1,
+          "empty": false,
+          "protected": true,
+          "title": "목적지 책갈피",
+          "kind": "BOOKMARK",
+          "target": null,
+          "enabled": true,
+          "traversable": false,
+          "metadata": {}
+        },
+        {
+          "position": 1,
+          "address": [
+            7,
+            1
+          ],
+          "revision": 1,
+          "empty": false,
+          "protected": false,
+          "title": "쿠팡",
+          "kind": "REFERENCE",
+          "target": [
+            2,
+            0
+          ],
+          "enabled": true,
+          "traversable": false,
+          "metadata": {}
+        },
+        {
+          "position": 2,
+          "address": [
+            7,
+            2
+          ],
+          "revision": 1,
+          "empty": false,
+          "protected": false,
+          "title": "GPS",
+          "kind": "REFERENCE",
+          "target": [
+            5,
+            0
+          ],
+          "enabled": true,
+          "traversable": false,
+          "metadata": {}
+        },
+        {
+          "position": 3,
+          "address": [
+            7,
+            3
+          ],
+          "revision": 1,
+          "empty": false,
+          "protected": false,
+          "title": "쿠팡으로 가는 칸",
+          "kind": "REFERENCE",
+          "target": [
+            1,
+            1
+          ],
+          "enabled": true,
+          "traversable": false,
+          "metadata": {}
+        }
+      ],
+      "metadata": {}
+    }
+  ],
+  "audit": {
+    "valid": true,
+    "events": 133
+  }
+}

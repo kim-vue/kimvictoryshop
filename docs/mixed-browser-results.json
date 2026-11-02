@@ -1,0 +1,18 @@
+{
+  "passed": 11,
+  "failed": 0,
+  "checks": [
+    "enter_owned_workspace_through_zoombar",
+    "actual_bridge_layer_bookmark_in_one_collection",
+    "separate_preserves_cell_and_blocks_only_that_link",
+    "reconnect_same_position_and_open_bridge",
+    "same_open_engine_for_layer",
+    "real_bookmark_separate_reconnect_keeps_reference_policy",
+    "explicit_physical_connection_from_bookmark_to_layer",
+    "bookmark_finds_real_route_and_hash_execution_still_works",
+    "other_actor_keeps_independent_private_worlds",
+    "mobile_layout_without_document_overflow",
+    "no_uncaught_browser_errors"
+  ],
+  "page_errors": []
+}

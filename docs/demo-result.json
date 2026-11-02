@@ -1,0 +1,29 @@
+{
+  "user_path": [
+    "MASTER",
+    "DELIVERY",
+    "COUPANG"
+  ],
+  "code_path": [
+    "MASTER",
+    "DELIVERY",
+    "BRIDGE_GPS_A",
+    "GPS"
+  ],
+  "code_after_out": [
+    "MASTER",
+    "DELIVERY",
+    "BRIDGE_GPS_A"
+  ],
+  "user_path_unchanged": true,
+  "cycle_returned_none": true,
+  "calculation": {
+    "contract_version": 1,
+    "parameter_hash": "zc1:a54e971041e9504c289aa1028c44ff9e2f12901e52a9411cbffb5eccd2878328",
+    "result": 13500
+  },
+  "history": {
+    "valid": true,
+    "events": 97
+  }
+}

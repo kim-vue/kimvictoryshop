@@ -1,0 +1,18 @@
+{
+  "passed": 11,
+  "failed": 0,
+  "checks": [
+    "real_root_collection_at_0_0",
+    "bookmark_selects_reference_and_walks_real_positions",
+    "positional_hash_execution_13500",
+    "reorder_keeps_1_1_and_changes_occupant_to_baemin",
+    "old_view_cannot_select_changed_content",
+    "same_slot_now_opens_new_target_3_0",
+    "independent_pinned_reference_stays_at_1_1_not_old_content",
+    "actors_keep_independent_zoombar_collections",
+    "out_uses_saved_visit_cells",
+    "mobile_no_document_overflow",
+    "no_uncaught_browser_errors"
+  ],
+  "page_errors": []
+}

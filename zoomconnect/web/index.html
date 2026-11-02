@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>ZOOMCONNECT — 모든 세계로 가는 하나의 길</title>
+  <style>
+    :root { --bg:#090d16; --panel:#101724; --raised:#151e2d; --border:#263248; --text:#e9eef8; --muted:#8e9db5; --blue:#81aaff; --violet:#a69aff; --mint:#7cd8bb; --danger:#ff9aab; --mono:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:Inter,Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:14px; line-height:1.55; }
+    button,input,select,textarea { font:inherit; }
+    button { cursor:pointer; }
+    button:disabled { cursor:wait; opacity:.5; }
+    button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible { outline:2px solid var(--blue); outline-offset:4px; }
+    button,input,select,textarea { border-radius:8px; }
+    input,select,textarea { border:1px solid var(--border); background:#0c1320; color:var(--text); padding:10px 12px; min-width:0; }
+    input::placeholder,textarea::placeholder { color:#68778f; }
+    input:focus,textarea:focus { border-color:#7196e8; }
+    button { border:1px solid var(--border); color:var(--text); background:#182235; padding:9px 12px; transition:background .12s,border-color .12s; }
+    button:hover:not(:disabled) { border-color:#6079a0; background:#21304a; }
+    .muted { color:var(--muted); }
+    .mono { font-family:var(--mono); }
+    .eyebrow { text-transform:uppercase; font-family:var(--mono); font-size:10px; letter-spacing:1.7px; color:var(--muted); }
+    .app-header { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:23px 30px; border-bottom:1px solid var(--border); background:#0d131f; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .brand-mark { width:37px; height:37px; border-radius:11px; display:grid; place-items:center; background:#1c2c4c; border:1px solid #4968a4; color:#a8c4ff; font:700 23px var(--mono); transform:rotate(-8deg); }
+    .brand-name { font-weight:750; letter-spacing:2.7px; font-size:16px; line-height:1.25; }
+    .brand-sub { color:#7d8fae; font:9px var(--mono); letter-spacing:1.8px; margin-top:5px; }
+    .header-right { display:flex; align-items:center; gap:18px; }
+    .runtime-status { display:flex; gap:7px; align-items:center; font-size:12px; color:var(--muted); }
+    .status-dot { width:6px; height:6px; border-radius:50%; background:#63708b; }
+    .status-dot.online { background:var(--mint); box-shadow:0 0 9px #7cd8bb33; }
+    .badge { font:10px var(--mono); border:1px solid #384569; background:#182139; color:#b3c7f8; padding:5px 8px; border-radius:5px; letter-spacing:.5px; }
+    .intro { padding:26px 30px 23px; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; }
+    h1 { margin:5px 0 6px; font-size:clamp(22px,2.1vw,30px); letter-spacing:-1px; line-height:1.4; font-weight:680; }
+    .intro p { margin:0; color:var(--muted); font-size:12px; }
+    .intro-aside { text-align:right; font-family:var(--mono); font-size:10px; color:#7f90ad; white-space:nowrap; }
+    .workspace { display:grid; grid-template-columns:228px minmax(460px,1fr) 316px; gap:18px; padding:0 26px 28px; max-width:1900px; margin:0 auto; align-items:start; }
+    .sidebar,.right-column,.center-column { display:flex; flex-direction:column; gap:17px; min-width:0; }
+    .panel { border:1px solid var(--border); border-radius:12px; background:var(--panel); overflow:hidden; }
+    .panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:17px 18px 13px; }
+    .panel-title { margin:0; font-size:13px; font-weight:650; }
+    .panel-body { padding:0 18px 18px; }
+    .panel-number { font:10px var(--mono); color:#7284a5; }
+    .tiny-note { font-size:11px; color:var(--muted); line-height:1.7; margin:9px 0 0; }
+    .actor-list { display:flex; flex-direction:column; gap:6px; }
+    .actor-button { display:flex; align-items:center; width:100%; gap:10px; padding:9px 11px; background:transparent; border-color:transparent; text-align:left; }
+    .actor-button[aria-pressed="true"] { border-color:#385da1; background:#1b2d4c; }
+    .actor-icon { width:26px; height:26px; display:grid; place-items:center; font-size:10px; font-family:var(--mono); color:#a2b1cd; background:#202b3f; border-radius:7px; }
+    .actor-button[aria-pressed="true"] .actor-icon { color:#c9d8ff; background:#345080; }
+    .actor-name { font:11px var(--mono); letter-spacing:.4px; }
+    .actor-current { margin-left:auto; color:var(--blue); font-size:11px; }
+    .bookmark-list { display:flex; flex-direction:column; gap:7px; }
+    .bookmark-button { width:100%; display:flex; text-align:left; align-items:center; gap:9px; background:transparent; border:0; padding:8px 2px; border-radius:4px; font-size:12px; }
+    .bookmark-icon { color:var(--violet); font-size:14px; }
+    .bookmark-button small { display:block; color:#7485a1; font:9px var(--mono); margin-top:2px; }
+    .bookmark-button .arrow { margin-left:auto; color:#667c9e; }
+    .law-note { padding:16px; border:1px solid #303853; border-radius:10px; background:#121829; }
+    .law-note strong { font-size:11px; font-weight:600; color:#c8c2ff; }
+    .law-note p { margin:7px 0 0; font-size:11px; color:#95a2bb; line-height:1.8; }
+    .graph-head { padding-bottom:12px; border-bottom:1px solid #1e293d; }
+    .graph-head .muted { font-size:10px; margin-top:2px; }
+    .graph-tools { display:flex; gap:6px; }
+    .small-button { font-size:11px; padding:6px 9px; background:#141f31; }
+    .graph-surface { position:relative; background:radial-gradient(ellipse at 50% 48%,#14233a66 0,transparent 65%),radial-gradient(#34445f55 .7px,transparent .7px); background-size:auto,19px 19px; }
+    #world-graph { display:block; width:100%; height:390px; }
+    .graph-legend { position:absolute; bottom:13px; left:18px; display:flex; gap:17px; font-size:9px; color:#8394b0; pointer-events:none; }
+    .legend-item { display:flex; align-items:center; gap:6px; }
+    .legend-dot { width:6px; height:6px; border-radius:50%; background:#4c5d7a; }
+    .legend-dot.current { background:var(--violet); }
+    .legend-dot.available { background:var(--blue); }
+    .graph-node { cursor:pointer; }
+    .graph-node .node-disc { fill:#162034; stroke:#3c4b68; stroke-width:1.2; transition:fill .15s,stroke .15s; }
+    .graph-node .node-halo { fill:transparent; stroke:transparent; stroke-width:9; }
+    .graph-node.available .node-disc { stroke:#6c9cf5; fill:#1b3154; }
+    .graph-node.current .node-disc { stroke:#b5a6ff; fill:#352c59; stroke-width:1.8; }
+    .graph-node.current .node-halo { stroke:#b4a4ff13; }
+    .graph-node.selected .node-disc { stroke:#d2dcf8; }
+    .graph-node:hover .node-disc { fill:#2c3d59; stroke:#bacdf0; }
+    .graph-node text { fill:#9aacc9; font-size:11px; pointer-events:none; }
+    .graph-node.current text,.graph-node.available text { fill:#e3ebff; }
+    .graph-node .node-symbol { fill:#c5d2ed; font:10px var(--mono); text-anchor:middle; }
+    .edge { fill:none; stroke:#35445e; stroke-width:1; opacity:.75; }
+    .edge.route { stroke:#a290ed; stroke-width:1.8; opacity:.95; }
+    .edge.available-edge { stroke:#5884c5; stroke-width:1.3; }
+    .graph-caption { border-top:1px solid #1e293d; padding:11px 18px; color:#8394af; font-size:10px; min-height:39px; }
+    .path-section { padding:14px 18px; border-top:1px solid #1e293d; background:#0d1522; }
+    .path-row { display:flex; align-items:center; gap:8px; }
+    .path-title { font:9px var(--mono); color:#7285a7; letter-spacing:.8px; white-space:nowrap; }
+    .breadcrumbs { display:flex; flex-wrap:wrap; gap:5px; align-items:center; min-width:0; }
+    .crumb { font:10px var(--mono); color:#a3b3d1; padding:3px 5px; background:#182338; border-radius:3px; overflow-wrap:anywhere; }
+    .crumb.current { background:#32294c; color:#d0c2ff; }
+    .crumb-divider { color:#52627e; font-size:10px; }
+    .url-row { display:flex; align-items:center; gap:7px; margin-top:11px; }
+    #path-input { flex:1; font:10px var(--mono); padding:9px 10px; width:100%; }
+    .url-button { font-size:10px; padding:8px 10px; white-space:nowrap; }
+    .current-head { display:flex; align-items:center; gap:12px; padding:18px; border-bottom:1px solid #223047; }
+    .world-icon { background:#202d48; border:1px solid #3a527a; border-radius:10px; width:39px; height:39px; display:grid; place-items:center; color:#9dbdff; font-size:19px; }
+    .current-title { margin:0; font-size:17px; font-weight:650; }
+    #current-kind { font:9px var(--mono); color:#8195b8; margin-top:2px; }
+    .current-head .badge { margin-left:auto; font-size:8px; }
+    .target-header { padding:15px 18px 9px; display:flex; justify-content:space-between; color:#a2b1c9; font-size:11px; }
+    .targets { display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:9px; padding:0 18px 18px; }
+    .target { padding:12px; border:1px solid #2b3e5c; background:#152238; text-align:left; display:flex; gap:10px; align-items:center; }
+    .target:hover:not(:disabled) { background:#1c2f4e; border-color:#6a98e8; }
+    .target-symbol { color:#90b5ff; font-size:18px; }
+    .target strong { display:block; font-size:12px; font-weight:550; }
+    .target small { font:8px var(--mono); color:#8196b7; display:block; margin-top:3px; overflow-wrap:anywhere; }
+    .target .target-arrow { margin-left:auto; color:#7c9bc9; }
+    .empty { color:#8190a7; font-size:11px; padding:13px 0; line-height:1.8; }
+    .targets .empty { padding-bottom:0; }
+    .cycle-intro { font-size:11px; color:#8f9fb9; margin:0 0 13px; line-height:1.8; }
+    .cycle-fields { margin:0; display:grid; gap:0; }
+    .cycle-field { display:grid; grid-template-columns:112px 1fr; gap:9px; padding:8px 0; border-bottom:1px solid #202b3d; align-items:center; }
+    .cycle-field dt { font:8px var(--mono); color:#798eaf; letter-spacing:.15px; }
+    .cycle-field dd { margin:0; font-size:11px; color:#c0cce2; overflow-wrap:anywhere; }
+    .cycle-field:last-child dd { color:#b6a5ff; font:9px var(--mono); }
+    #contract-select { width:100%; font-size:11px; margin-bottom:10px; }
+    .field-label { display:block; color:#91a3c1; font-size:10px; margin:14px 0 7px; }
+    #data-input { width:100%; min-height:65px; resize:vertical; font:11px/1.7 var(--mono); }
+    .primary { background:#7598eb; color:#0b1730; border-color:#8ca9f0; font-size:12px; font-weight:700; }
+    .primary:hover:not(:disabled) { background:#96b5ff; border-color:#a6bffe; }
+    #run-button { width:100%; margin-top:10px; display:flex; justify-content:center; gap:8px; }
+    #result-panel { margin-top:13px; border:1px solid #314837; background:#14251f; padding:11px; border-radius:7px; }
+    #result-panel .eyebrow { color:#80b89a; font-size:8px; }
+    #result-value { margin:7px 0 0; color:#b4e8cb; font:13px/1.6 var(--mono); white-space:pre-wrap; overflow-wrap:anywhere; }
+    .integrity { display:flex; align-items:center; gap:8px; font-size:11px; color:#91a3bf; }
+    #integrity-icon { width:19px; height:19px; border-radius:50%; border:1px solid #3a5a51; color:var(--mint); display:grid; place-items:center; font-size:10px; }
+    #integrity-detail { font:9px var(--mono); color:#688c80; margin-top:3px; }
+    .timeline { max-height:298px; overflow:auto; padding:0 18px 8px; scrollbar-width:thin; scrollbar-color:#334362 transparent; }
+    .event { border-left:1px solid #31415c; padding:0 0 16px 15px; position:relative; margin-left:4px; }
+    .event:before { content:""; width:5px; height:5px; position:absolute; left:-3px; top:5px; border-radius:50%; background:#6785b4; box-shadow:0 0 0 4px var(--panel); }
+    .event-kind { display:flex; justify-content:space-between; gap:8px; font:9px var(--mono); color:#a6bce0; }
+    .event-kind time { color:#647b9e; white-space:nowrap; font-size:8px; }
+    .event-detail { margin-top:5px; font-size:10px; color:#8599ba; line-height:1.7; overflow-wrap:anywhere; }
+    .notice { margin:0 26px 22px; max-width:1848px; padding:12px 15px; border:1px solid #28334a; border-radius:8px; background:#111827; color:#8c9db9; font-size:11px; display:flex; align-items:center; gap:10px; }
+    .notice[hidden], [hidden] { display:none !important; }
+    .notice.error { border-color:#673347; background:#281722; color:#efafbc; }
+    .notice.success { border-color:#31534b; background:#12231f; color:#9cd0bd; }
+    .notice-symbol { font-family:var(--mono); color:inherit; }
+    .footer { padding:0 30px 24px; display:flex; justify-content:space-between; gap:12px; color:#52657f; font:9px var(--mono); }
+    .loading-wash { opacity:.65; }
+    @media (min-width:1900px) { .intro,.app-header { padding-left:max(30px,calc((100vw - 1848px)/2)); padding-right:max(30px,calc((100vw - 1848px)/2)); } .notice { margin-left:auto; margin-right:auto; } }
+    @media (max-width:1250px) { .workspace { grid-template-columns:205px minmax(0,1fr); } .right-column { grid-column:2; display:grid; grid-template-columns:1fr 1fr; align-items:start; } .intro-aside { display:none; } #world-graph { height:420px; } }
+    @media (max-width:800px) { .app-header { padding:18px; } .header-right .badge { display:none; } .intro { padding:22px 18px; } .workspace { grid-template-columns:1fr; padding:0 14px 20px; gap:14px; } .sidebar { display:grid; grid-template-columns:1fr 1fr; gap:12px; } .sidebar .law-note { grid-column:1 / -1; padding:11px 15px; } .sidebar .law-note p { margin-top:3px; } .actor-list { display:grid; grid-template-columns:1fr 1fr; gap:4px; } .actor-button { padding:6px; gap:7px; } .actor-icon { width:20px; height:23px; } .actor-name { font-size:9px; } .actor-current { display:none; } .right-column { grid-column:1; } .notice { margin:0 14px 16px; } #world-graph { height:auto; aspect-ratio:900/500; min-height:300px; } .footer { padding:0 18px 20px; } .footer span:last-child { display:none; } }
+    @media (max-width:500px) { .brand-name { font-size:13px; letter-spacing:2px; } .brand-sub { font-size:8px; } .runtime-status { font-size:10px; } .right-column { display:flex; } .sidebar { grid-template-columns:1fr; } .actor-list { grid-template-columns:repeat(5,1fr); } .actor-button { padding:8px 2px; justify-content:center; } .actor-icon { display:none; } .sidebar .law-note { display:none; } .bookmark-list { flex-direction:row; flex-wrap:wrap; gap:3px 12px; } .bookmark-button { width:auto; font-size:11px; } .bookmark-button small,.bookmark-button .arrow { display:none; } .panel-head { padding:14px 15px 10px; } .panel-body { padding:0 15px 15px; } .graph-tools .small-button { padding:5px 7px; font-size:10px; } .graph-legend { gap:10px; bottom:8px; left:12px; font-size:8px; } .path-row { align-items:flex-start; } .url-row { gap:5px; } .url-button { padding:8px; font-size:9px; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { transition:none !important; scroll-behavior:auto !important; } }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand"><div class="brand-mark" aria-hidden="true">Z</div><div><div class="brand-name">ZOOMCONNECT</div><div class="brand-sub">WORLD CONNECTION SYSTEM</div></div></div>
+    <div class="header-right"><div class="runtime-status"><span id="status-dot" class="status-dot"></span><span id="runtime-status">연결 확인 중</span></div><span class="badge">LOCAL PROTOTYPE · 0.1</span></div>
+  </header>
+  <section class="intro">
+    <div><div class="eyebrow">ONE PROTOCOL. EVERY WORLD.</div><h1>모든 세계로 가는 하나의 길</h1><p>사용자도, AI도, 코드도. 모든 이동은 ZOOMBAR를 통합니다.</p></div>
+    <div class="intro-aside">LENS = WORLD = COMPONENT<br><span style="color:#4f6282">독립된 세계 · 연결된 가능성</span></div>
+  </section>
+  <div id="notice" class="notice" role="status" aria-live="polite" hidden><span class="notice-symbol" aria-hidden="true">↳</span><span id="notice-text"></span></div>
+  <main class="workspace">
+    <aside class="sidebar" aria-label="주체와 북마크">
+      <section class="panel"><div class="panel-head"><h2 class="panel-title">이동 주체</h2><span class="panel-number">01</span></div><div class="panel-body"><div id="actor-list" class="actor-list"></div><p class="tiny-note">주체마다 위치와 이동 이력이 독립됩니다. 데모에서는 모두 동일한 접근 권한을 가집니다.</p></div></section>
+      <section class="panel"><div class="panel-head"><h2 class="panel-title">북마크</h2><span class="panel-number">02</span></div><div class="panel-body"><div id="bookmarks" class="bookmark-list"><div class="empty">책갈피를 불러오는 중입니다.</div></div><p class="tiny-note">목적지를 찾는 책갈피입니다.<br>실제 경로는 ZOOMBAR로 이동합니다.</p></div></section>
+      <div class="law-note"><strong>하나의 이동 원리</strong><p>LENS 종류별 우회 경로 없이,<br>연결 · 권한 · 방문 이력을 따릅니다.<br>지도 배치는 소유 계층이 아닙니다.</p></div>
+    </aside>
+    <div class="center-column">
+      <section class="panel" aria-labelledby="graph-title">
+        <div class="panel-head graph-head"><div><h2 id="graph-title" class="panel-title">연결된 세계</h2><div class="muted">현재 위치에서 이동 가능한 연결을 확인하세요.</div></div><div class="graph-tools"><button class="small-button" id="out-button" type="button">← ZOOM OUT</button><button class="small-button" id="root-button" type="button">출발점</button></div></div>
+        <div class="graph-surface"><svg id="world-graph" viewBox="0 0 900 500" role="group" aria-label="독립 LENS의 방향 연결 지도"></svg><div class="graph-legend"><span class="legend-item"><i class="legend-dot current"></i>현재 세계</span><span class="legend-item"><i class="legend-dot available"></i>이동 가능</span><span class="legend-item"><i class="legend-dot"></i>다른 세계</span></div></div>
+        <div id="graph-caption" class="graph-caption">파란 세계를 선택하면 연결을 따라 한 칸 이동합니다.</div>
+        <div class="path-section"><div class="path-row"><span class="path-title">ZOOMBAR</span><nav id="breadcrumbs" class="breadcrumbs" aria-label="현재 방문 경로"></nav></div><form id="url-form" class="url-row"><label class="eyebrow" for="path-input" hidden>이동 경로 URL</label><input id="path-input" class="mono" type="text" spellcheck="false" autocomplete="off" aria-label="이동 경로 URL" placeholder="zoom://world/MASTER/…"><button class="url-button" type="submit">경로 걷기 ↗</button></form></div>
+      </section>
+      <section class="panel" aria-label="현재 세계와 이동 가능한 연결"><div class="current-head"><span class="world-icon" aria-hidden="true">◇</span><div><h2 id="current-title" class="current-title">세계에 연결하는 중</h2><div id="current-kind">WAITING FOR RUNTIME</div></div><span class="badge">CURRENT LENS</span></div><div class="target-header"><span>이동 가능한 연결</span><span id="target-count" class="mono">—</span></div><div id="targets" class="targets"><div class="empty">런타임의 목록을 기다리고 있습니다.</div></div></section>
+    </div>
+    <aside class="right-column" aria-label="실행 계약과 이동 기록">
+      <section class="panel"><div class="panel-head"><h2 class="panel-title">ZOOMCYCLE</h2><span class="panel-number">03</span></div><div class="panel-body"><p class="cycle-intro">현재 세계의 계약으로 실행합니다.<br>계산 결과는 HASH 참조로 기록됩니다.</p><select id="contract-select" aria-label="현재 세계의 실행 계약" hidden></select><dl id="cycle-fields" class="cycle-fields"></dl><div id="run-form" hidden><label class="field-label" for="data-input">입력 데이터 · 숫자 목록</label><textarea id="data-input" spellcheck="false" aria-label="JSON 숫자 목록">[4500, 3800, 5200]</textarea><button id="run-button" class="primary" type="button"><span>ZOOMCYCLE_CODE 실행</span><span aria-hidden="true">↗</span></button></div><p id="no-contract" class="tiny-note">실행 계약이 있는 세계로 이동하면 입력할 수 있습니다.</p><div id="result-panel" hidden><div class="eyebrow">RECORDED RESULT</div><pre id="result-value"></pre></div></div></section>
+      <section class="panel"><div class="panel-head"><h2 class="panel-title">이동과 실행 기록</h2><span class="panel-number">04</span></div><div class="panel-body" style="padding-bottom:17px"><div class="integrity"><span id="integrity-icon" aria-hidden="true">·</span><div><span id="integrity-label">해시체인 검사 대기</span><div id="integrity-detail">RUNTIME EVIDENCE</div></div></div></div><div id="timeline" class="timeline"><div class="empty">아직 불러온 기록이 없습니다.</div></div></section>
+    </aside>
+  </main>
+  <footer class="footer"><span>격리된 로컬 데모 · 실제 서비스 연결 없음</span><span>NO DIRECT LENS ACCESS · EVERY MOVE THROUGH ZOOMBAR</span></footer>
+  <script>
+    'use strict';
+    const $ = (id) => document.getElementById(id);
+    const NS = 'http://www.w3.org/2000/svg';
+    const actorLabels = {USER:'사용자',AI:'AI',MASTER:'MASTER',AGENT:'에이전트',CODE:'코드'};
+    let currentActor = 'USER';
+    let state = null;
+    let busy = false;
+    let selectedUid = null;
+    let requestSequence = 0;
+    let lastResult = undefined;
+
+    function element(tag, className, text) {
+      const item = document.createElement(tag);
+      if (className) item.className = className;
+      if (text !== undefined) item.textContent = String(text);
+      return item;
+    }
+    function svgElement(tag, attrs = {}, text) {
+      const item = document.createElementNS(NS, tag);
+      for (const [name,value] of Object.entries(attrs)) item.setAttribute(name,String(value));
+      if (text !== undefined) item.textContent = String(text);
+      return item;
+    }
+    function notify(message, type = '') {
+      $('notice').className = 'notice ' + type;
+      $('notice-text').textContent = message;
+      $('notice').hidden = !message;
+    }
+    function setBusy(value) {
+      busy = value;
+      document.querySelectorAll('button,input,select,textarea').forEach((control) => { control.disabled = value; });
+      $('world-graph').setAttribute('aria-busy',String(value));
+    }
+    async function readResponse(response) {
+      const data = await response.json();
+      if (!response.ok || data.error) {
+        const error = data.error || {code:'HTTP_' + response.status,message:'요청을 처리하지 못했습니다.'};
+        throw new Error(String(error.code || 'ERROR') + ' · ' + String(error.message || error));
+      }
+      return data;
+    }
+    async function loadState(actor = currentActor) {
+      if (busy) return;
+      const sequence = ++requestSequence;
+      setBusy(true);
+      try {
+        const data = await readResponse(await fetch('/api/state?actor=' + encodeURIComponent(actor),{credentials:'same-origin',cache:'no-store'}));
+        if (sequence !== requestSequence) return;
+        currentActor = actor;
+        state = data;
+        lastResult = undefined;
+        render();
+        notify('');
+      } catch (error) {
+        $('runtime-status').textContent = '연결 확인 필요';
+        $('status-dot').className = 'status-dot';
+        notify(error.message,'error');
+      } finally { setBusy(false); }
+    }
+    async function action(name, details = {}) {
+      if (busy) return;
+      setBusy(true);
+      try {
+        const data = await readResponse(await fetch('/api/action',{
+          method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({actor:currentActor,action:name,...details})
+        }));
+        state = data;
+        lastResult = undefined;
+        if (Object.prototype.hasOwnProperty.call(data,'last_result')) lastResult = data.last_result;
+        render();
+        notify(data.status || 'ZOOMBAR 경로와 실행 기록이 갱신되었습니다.','success');
+      } catch (error) {
+        const message = error.message;
+        try {
+          // A failed URL can have a valid prefix; show the real resulting location.
+          state = await readResponse(await fetch('/api/state?actor=' + encodeURIComponent(currentActor),{credentials:'same-origin',cache:'no-store'}));
+          render();
+        } catch (_) { /* Preserve the original error and the last known state. */ }
+        notify(message,'error');
+      } finally { setBusy(false); }
+    }
+    function nodeInfo(uid) {
+      return (state.nodes || []).find((node) => node.uid === uid) || {uid,label:uid,kind:'LENS'};
+    }
+    function renderActors() {
+      const list = $('actor-list');
+      list.replaceChildren();
+      for (const actor of state.actors || []) {
+        const button = element('button','actor-button');
+        button.type = 'button';
+        button.setAttribute('aria-pressed',String(actor === currentActor));
+        button.setAttribute('aria-label',(actorLabels[actor] || actor) + '의 ZOOMBAR 보기');
+        button.append(element('span','actor-icon',actor.slice(0,2)),element('span','actor-name',actorLabels[actor] || actor));
+        if (actor === currentActor) button.append(element('span','actor-current','●'));
+        button.addEventListener('click',() => loadState(actor));
+        list.append(button);
+      }
+    }
+    function renderBookmarks() {
+      const list = $('bookmarks');
+      list.replaceChildren();
+      for (const bookmark of state.bookmarks || []) {
+        const button = element('button','bookmark-button');
+        button.type = 'button';
+        button.setAttribute('aria-label',bookmark.name + ' 북마크의 목적지로 ZOOMBAR 이동');
+        const caption = element('span','',bookmark.name);
+        caption.append(element('small','',bookmark.target));
+        button.append(element('span','bookmark-icon','♧'),caption,element('span','arrow','↗'));
+        button.addEventListener('click',() => action('bookmark',{name:bookmark.name}));
+        list.append(button);
+      }
+      if (!list.childElementCount) list.append(element('div','empty','등록된 북마크가 없습니다.'));
+    }
+    function renderPath() {
+      const current = nodeInfo(state.here);
+      $('current-title').textContent = current.label;
+      $('current-kind').textContent = current.uid + '  /  ' + current.kind;
+      const breadcrumbs = $('breadcrumbs');
+      breadcrumbs.replaceChildren();
+      (state.path || []).forEach((uid,index,path) => {
+        if (index) breadcrumbs.append(element('span','crumb-divider','›'));
+        const crumb = element('span','crumb' + (index === path.length-1 ? ' current' : ''),uid);
+        if (index === path.length-1) crumb.setAttribute('aria-current','location');
+        breadcrumbs.append(crumb);
+      });
+      $('path-input').value = state.url || '';
+    }
+    function renderTargets() {
+      const list = $('targets');
+      list.replaceChildren();
+      const targets = state.visible || [];
+      $('target-count').textContent = String(targets.length).padStart(2,'0') + ' CONNECTIONS';
+      for (const target of targets) {
+        const button = element('button','target');
+        button.type = 'button';
+        const caption = element('span');
+        caption.append(element('strong','',target.label),element('small','',target.uid));
+        button.append(element('span','target-symbol','◇'),caption,element('span','target-arrow','↗'));
+        button.addEventListener('click',() => action('enter',{target:target.uid,connection_id:target.connection_id}));
+        list.append(button);
+      }
+      if (!targets.length) list.append(element('div','empty','지금 위치에서 앞으로 이동할 수 있는 연결이 없습니다.\nZOOM OUT으로 들어온 길을 되짚을 수 있습니다.'));
+    }
+    function renderGraph() {
+      const svg = $('world-graph');
+      svg.replaceChildren();
+      const defs = svgElement('defs');
+      for (const [id,color] of [['arrow-normal','#455c7d'],['arrow-active','#6e9fef'],['arrow-route','#ab98ee']]) {
+        const marker = svgElement('marker',{id,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:5,markerHeight:5,orient:'auto-start-reverse'});
+        marker.append(svgElement('path',{d:'M 0 1 L 9 5 L 0 9 z',fill:color}));
+        defs.append(marker);
+      }
+      svg.append(defs);
+      const nodes = state.nodes || [];
+      const positions = new Map();
+      nodes.forEach((node,index) => {
+        const angle = -Math.PI/2 + index * (Math.PI*2 / Math.max(nodes.length,1));
+        positions.set(node.uid,{x:450 + 320*Math.cos(angle),y:245 + 166*Math.sin(angle)});
+      });
+      const route = new Set((state.path || []).slice(1).map((uid,index) => JSON.stringify([state.path[index],uid])));
+      const visible = new Set((state.visible || []).map((node) => node.uid));
+      for (const edge of state.links || []) {
+        const a = positions.get(edge.source),b = positions.get(edge.target);
+        if (!a || !b) continue;
+        const dx = b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy) || 1;
+        const sx=a.x+dx/len*26,sy=a.y+dy/len*26,tx=b.x-dx/len*29,ty=b.y-dy/len*29;
+        const isRoute=route.has(JSON.stringify([edge.source,edge.target]));
+        const available=edge.source === state.here && visible.has(edge.target);
+        const className='edge' + (isRoute ? ' route' : available ? ' available-edge' : '');
+        svg.append(svgElement('path',{d:`M ${sx} ${sy} L ${tx} ${ty}`,class:className,'marker-end':'url(#' + (isRoute ? 'arrow-route' : available ? 'arrow-active' : 'arrow-normal') + ')'}));
+      }
+      for (const node of nodes) {
+        const p = positions.get(node.uid);
+        const current = node.uid === state.here,available=visible.has(node.uid);
+        const group = svgElement('g',{class:'graph-node' + (current?' current':'') + (available?' available':'') + (node.uid === selectedUid?' selected':''),transform:`translate(${p.x},${p.y})`,role:'button',tabindex:0,'aria-label':node.label + (available?' · 이동 가능':current?' · 현재 세계':' · 위치 확인')});
+        group.append(svgElement('circle',{class:'node-halo',r:29}),svgElement('circle',{class:'node-disc',r:24}));
+        group.append(svgElement('text',{class:'node-symbol',y:4},node.uid.slice(0,2)));
+        group.append(svgElement('text',{'text-anchor':'middle',y:43},node.label));
+        const activate = () => {
+          if (busy) return;
+          selectedUid=node.uid;
+          if (available) {
+            const target=(state.visible || []).find((item) => item.uid === node.uid);
+            action('enter',{target:node.uid,connection_id:target.connection_id});
+          } else {
+            $('graph-caption').textContent = current ? node.label + ' · 지금 서 있는 세계입니다.' : node.label + ' · 현재 위치에서 직접 이동할 수 없습니다. 연결을 따라가거나 북마크를 사용하세요.';
+            renderGraph();
+          }
+        };
+        group.addEventListener('click',activate);
+        group.addEventListener('keydown',(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(); } });
+        svg.append(group);
+      }
+    }
+    function activeContract() {
+      return (state.contracts || [])[Number($('contract-select').value) || 0];
+    }
+    function renderCycleFields() {
+      const fields = $('cycle-fields');
+      fields.replaceChildren();
+      const contract = activeContract();
+      for (const key of ['BASE_PIN','COMMON_ACTION','INNER_LENS','UNIQUE_ACTION','ZOOMCYCLE_CODE']) {
+        const row=element('div','cycle-field');
+        const value=key === 'ZOOMCYCLE_CODE' ? (contract?'공통 실행 진입점':'실행 계약 대기') : contract ? contract[key] : '—';
+        row.append(element('dt','',key),element('dd','',value));
+        fields.append(row);
+      }
+      $('run-form').hidden=!contract;
+      $('no-contract').hidden=!!contract;
+    }
+    function renderCycle() {
+      const select = $('contract-select');
+      const selected=select.value;
+      select.replaceChildren();
+      (state.contracts || []).forEach((contract,index) => {
+        const option=element('option','',contract.UNIQUE_ACTION + ' · v' + contract.version);
+        option.value=String(index);
+        select.append(option);
+      });
+      if (Number(selected) < (state.contracts || []).length) select.value=selected;
+      select.hidden=(state.contracts || []).length < 2;
+      renderCycleFields();
+      $('result-panel').hidden=lastResult === undefined;
+      $('result-value').textContent=lastResult === undefined ? '' : JSON.stringify(lastResult,null,2);
+    }
+    function renderHistory() {
+      const timeline=$('timeline');
+      timeline.replaceChildren();
+      const events=[...(state.history || [])].sort((a,b) => Number(b.sequence || 0)-Number(a.sequence || 0));
+      for (const event of events.slice(0,16)) {
+        const row=element('div','event');
+        const title=element('div','event-kind');
+        const date=new Date(event.timestamp);
+        const clock=Number.isNaN(date.getTime()) ? '' : date.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+        title.append(element('span','',event.kind),element('time','',clock));
+        const details=event.body || {};
+        const detail=Object.entries(details).map(([key,value]) => key + ': ' + (typeof value === 'string' ? value : JSON.stringify(value))).join(' · ');
+        row.append(title,element('div','event-detail',detail || '기록된 이벤트'));
+        timeline.append(row);
+      }
+      if (!events.length) timeline.append(element('div','empty','이 주체의 기록이 아직 없습니다. 연결을 선택해 이동해 보세요.'));
+      const integrity=state.integrity;
+      const valid=integrity && integrity.valid === true;
+      $('integrity-icon').textContent=integrity ? (valid?'✓':'!') : '·';
+      $('integrity-icon').style.color=integrity && !valid?'var(--danger)':'var(--mint)';
+      $('integrity-label').textContent=integrity ? (valid?'해시체인 검사 일치':'해시체인 불일치 감지') : '해시체인 검사 대기';
+      $('integrity-detail').textContent=integrity ? String(integrity.events) + ' EVENTS · 런타임 검사 결과' : 'RUNTIME EVIDENCE';
+    }
+    function render() {
+      $('runtime-status').textContent='로컬 런타임 연결';
+      $('status-dot').className='status-dot online';
+      $('graph-caption').textContent='파란 세계를 선택하면 연결을 따라 한 칸 이동합니다. 지도는 소유 계층이 아닙니다.';
+      renderActors();renderBookmarks();renderPath();renderTargets();renderGraph();renderCycle();renderHistory();
+    }
+    $('out-button').addEventListener('click',() => action('out'));
+    $('root-button').addEventListener('click',() => action('root'));
+    $('contract-select').addEventListener('change',renderCycleFields);
+    $('url-form').addEventListener('submit',(event) => { event.preventDefault(); action('walk',{url:$('path-input').value}); });
+    $('run-button').addEventListener('click',() => {
+      const contract=activeContract();
+      if (!contract || busy) return;
+      try { const data=JSON.parse($('data-input').value); action('run',{contract,data}); }
+      catch (_) { notify('INPUT_FORMAT · 숫자 목록을 JSON 형식으로 입력하세요. 예: [4500, 3800, 5200]','error'); }
+    });
+    loadState();
+  </script>
+</body>
+</html>

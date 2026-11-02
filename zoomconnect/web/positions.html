@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>ZOOMCONNECT — 위치가 신원입니다</title>
+  <style>
+    :root{--bg:#0a0e17;--panel:#111824;--panel-hi:#162031;--line:#29354a;--line-dim:#202a3d;--text:#e9effa;--muted:#8d9db7;--quiet:#61738f;--blue:#8caeff;--violet:#b0a0ff;--green:#8cd7b9;--red:#f4a2b2;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+    *{box-sizing:border-box}body{margin:0;color:var(--text);background:var(--bg);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.45}button,input{border-radius:7px}button{background:#1a263a;border:1px solid #344563;padding:8px 11px;color:var(--text);transition:background .12s,border-color .12s}button:hover:not(:disabled){background:#263958;border-color:#718bb5}button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--blue);outline-offset:4px}input{min-width:0;color:var(--text);background:#0b1321;border:1px solid #34435e;padding:9px 11px}input::placeholder{color:var(--quiet)}[hidden]{display:none!important}.mono{font-family:var(--mono)}.muted{color:var(--muted)}.eyebrow{font:9px var(--mono);letter-spacing:1.5px;color:var(--quiet);text-transform:uppercase}
+    .header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:21px 28px;border-bottom:1px solid var(--line);background:#0d1420}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:36px;height:36px;display:grid;place-items:center;border:1px solid #536ca0;border-radius:10px;background:#1c2b46;color:#bbd0ff;font:700 23px var(--mono);transform:rotate(-7deg)}.brand-name{font-size:15px;letter-spacing:2.8px;font-weight:750}.brand-sub{font:8px var(--mono);letter-spacing:1.7px;color:#778cad;margin-top:4px}.header-right{display:flex;align-items:center;gap:15px}.runtime{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px}.runtime-dot{height:6px;width:6px;border-radius:50%;background:#66738b}.runtime-dot.online{background:var(--green)}.badge{display:inline-flex;align-items:center;border:1px solid #3e466b;border-radius:5px;background:#1c2037;color:#c0b8f0;padding:4px 7px;font:9px var(--mono);letter-spacing:.35px;white-space:nowrap}
+    .intro{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;padding:27px 28px 23px}.intro h1{font-size:29px;letter-spacing:-1px;line-height:1.4;margin:5px 0 7px;font-weight:650}.intro p{font-size:12px;color:var(--muted);margin:0}.intro-formula{font:10px/1.9 var(--mono);color:#8a9bb9;text-align:right;white-space:nowrap}.intro-formula strong{color:#c9c1f8;font-weight:500}.layout{display:grid;grid-template-columns:228px minmax(520px,1fr) 318px;gap:17px;max-width:1900px;margin:0 auto;padding:0 24px 24px;align-items:start}.column{min-width:0;display:flex;flex-direction:column;gap:17px}.panel{border:1px solid var(--line);border-radius:11px;background:var(--panel);overflow:hidden}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 16px 12px}.panel-head h2{margin:0;font-size:12px;font-weight:650}.panel-number{color:var(--quiet);font:9px var(--mono)}.panel-body{padding:0 16px 16px}.note{font-size:10px;line-height:1.85;color:var(--muted);margin:9px 0 0}.empty{font-size:11px;line-height:1.8;color:var(--muted);padding:15px 16px}.actor-list{display:grid;gap:5px}.actor-button{width:100%;display:flex;align-items:center;gap:10px;background:transparent;border-color:transparent;text-align:left;padding:8px 9px}.actor-button[aria-pressed=true]{background:#1c2d4a;border-color:#3e6099}.actor-symbol{width:25px;height:25px;display:grid;place-items:center;background:#202d43;color:#a6b7d4;font:9px var(--mono);border-radius:6px}.actor-name{font:10px var(--mono);letter-spacing:.3px}.actor-dot{margin-left:auto;color:var(--blue);font-size:9px}.identity-note{padding:14px 15px;border:1px solid #3c365b;background:#17182b;border-radius:9px}.identity-note strong{color:#c5b7ff;font-size:11px;font-weight:600}.identity-note p{font-size:10px;color:#a69dbf;line-height:1.9;margin:6px 0 0}.catalogue{display:flex;flex-direction:column;gap:1px}.catalogue-row{padding:9px 0;border-bottom:1px solid var(--line-dim)}.catalogue-row:last-child{border-bottom:0}.catalogue-caption{font-size:11px;color:#b7c5dd;display:flex;justify-content:space-between;gap:8px}.catalogue-caption .address{font-size:9px;color:#9cafe0}.catalogue-detail{margin-top:3px;color:var(--quiet);font:8px var(--mono);overflow-wrap:anywhere}
+    .location-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;background:linear-gradient(100deg,#19223b,#151c2e);border-bottom:1px solid #34415e}.location-heading{display:flex;align-items:center;gap:11px}.location-symbol{width:35px;height:35px;display:grid;place-items:center;border:1px solid #5b5881;border-radius:9px;background:#302d4e;color:#cabaff;font-size:17px}.location-title{font-size:13px;font-weight:600}.location-value{font:10px var(--mono);color:#abadd5;margin-top:2px}.location-right{text-align:right;font-size:10px;color:#8c9bbc}.location-right strong{display:block;font:11px var(--mono);color:#c2c9e9}.board-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px 12px}.board-title{font-size:17px;letter-spacing:-.3px;font-weight:600;margin:0}.board-subtitle{font:9px var(--mono);color:#758bad;margin-top:4px}.board-actions{display:flex;align-items:center;gap:6px}.small-button{font-size:10px;padding:6px 8px;white-space:nowrap}.board-metrics{display:flex;gap:7px;flex-wrap:wrap;padding:0 18px 13px}.metric{font-size:9px;display:flex;align-items:center;gap:6px;color:#94a4bf;background:#182235;border:1px solid #2d3d58;border-radius:5px;padding:4px 7px}.metric strong{font:9px var(--mono);font-weight:500;color:#bdcbea}.metric.violet{border-color:#443c61;background:#211d34;color:#a99fc4}.metric.violet strong{color:#c8bdf6}.board-wrapper{width:100%}.board-scroll{overflow:auto;scrollbar-width:thin;scrollbar-color:#384e70 #121a28}.board-table{width:100%;border-collapse:collapse;text-align:left;table-layout:auto;font-size:11px}.board-table th{padding:9px 12px;color:#7f94b5;border-top:1px solid #2b3850;border-bottom:1px solid #2b3850;background:#111b2b;font-size:9px;font-weight:500;white-space:nowrap}.board-table td{padding:13px 12px;border-bottom:1px solid #212e43;vertical-align:middle}.board-table tbody tr:last-child td{border-bottom:0}.board-table .slot-zero td{background:#1e1d31;color:#a99fc8;border-bottom-color:#39304e;padding-top:10px;padding-bottom:10px}.board-table .slot-zero .row-title{color:#b8aadf;font-weight:500}.slot-position{font:12px var(--mono);color:#8399bc;min-width:18px;display:inline-block}.address{font-family:var(--mono);color:#b6c8f1;white-space:nowrap;font-size:10px}.row-title{font-size:12px;font-weight:550;line-height:1.5;white-space:normal;min-width:100px}.row-meta{font:8px var(--mono);color:#667e9f;margin-top:3px}.kind{font:8px var(--mono);letter-spacing:.3px;color:#94a8c8;background:#1d2a40;border:1px solid #2c3b55;border-radius:4px;display:inline-block;padding:3px 5px;white-space:nowrap}.row-state{font-size:9px;color:#8a9cb8;white-space:nowrap}.row-state.ready{color:#8bcab4}.row-state.off{color:#677993}.row-buttons{display:flex;align-items:center;justify-content:flex-end;gap:5px}.enter-button{font-size:10px;white-space:nowrap;padding:6px 9px;border-color:#3d5f96;background:#1c3152;color:#abc9ff}.reorder-buttons{display:flex;gap:2px}.reorder-button{font-size:10px;padding:5px 7px;color:#a8b8d3;line-height:1.5;background:#162236;border-color:#2f405c}.reorder-button:disabled{cursor:default;opacity:.23}.board-table tr.changed td{background:#1c2a31}.changed-tag{color:#90d5bb;font-size:8px;display:block;margin-top:3px}.revision-note{padding:12px 18px;font-size:10px;color:#899aba;border-top:1px solid #26344b;background:#101927;line-height:1.8}.revision-note strong{color:#b7c7e5;font-weight:500}.edit-note{padding:11px 18px;border-top:1px solid #34314a;background:#181827;font-size:10px;line-height:1.8;color:#a79ac2}.edit-note strong{font-size:9px;font-weight:600;color:#bfa9e9}.changes{padding:14px 18px;border-top:1px solid #345448;background:#13251f}.changes h3{font-size:11px;font-weight:550;color:#a6ddc4;margin:0 0 7px}.change-item{font-size:10px;color:#83b9a3;line-height:1.9}.change-item .address{color:#a5e2c8;font-size:9px}.changes .note{color:#81ab99;margin-top:6px;font-size:9px}.url-box{padding:13px 18px;border-top:1px solid #26354c;background:#0d1522}.path-label{font:8px var(--mono);color:#7285a6;letter-spacing:.7px;margin-bottom:7px}.path{display:flex;flex-wrap:wrap;gap:5px;align-items:center}.path-item{padding:3px 5px;background:#1b273b;color:#a4b8da;font:9px var(--mono);border-radius:3px}.path-item.current{background:#322a4e;color:#cbbaff}.path-divider{font-size:10px;color:#586e91}.url-form{display:flex;gap:6px;margin-top:10px}.url-form input{flex:1;width:100%;font:10px var(--mono)}.url-form button{font-size:10px;white-space:nowrap;padding:8px 10px}
+    .dense .board-table th{padding:8px;font-size:8px}.dense .board-table td{padding:9px 8px}.dense .board-table .row-title{font-size:10px;min-width:70px}.dense .board-table .slot-position{font-size:10px;min-width:10px}.dense .board-table .address{font-size:8px}.dense .board-table .kind{font-size:7px;padding:2px 3px}.dense .board-table .enter-button{font-size:9px;padding:4px 6px}.dense .row-meta{font-size:7px}.compact-board-head{padding:11px 12px 10px;border-top:1px solid #2e3a50;background:#121c2c;display:flex;justify-content:space-between;gap:7px;align-items:center}.compact-board-head strong{font-size:11px;font-weight:550}.compact-board-head .board-version{font:8px var(--mono);color:#8097ba;white-space:nowrap}.compact-board-head small{display:block;font:8px var(--mono);color:#7b8dac;margin-top:3px}.compact-board+.compact-board{margin-top:7px}.board-note{font-size:9px;line-height:1.8;color:#7d91b1;padding:10px 12px;border-top:1px solid #26344a}.own-path{display:flex;justify-content:space-between;align-items:center;padding:0 15px 13px;gap:10px}.own-path .address{font-size:15px;color:#c6b6ff}.own-path .muted{font-size:10px}.ledger-status{display:flex;align-items:center;gap:8px;padding:0 16px 15px;font-size:11px;color:#a2b5d4}.ledger-icon{display:grid;place-items:center;width:22px;height:22px;border:1px solid #3b514d;border-radius:50%;font-size:10px;color:var(--green)}.ledger-meta{font:8px var(--mono);color:#718a85;margin-top:3px}.timeline{max-height:265px;overflow:auto;scrollbar-width:thin;scrollbar-color:#344765 transparent;padding:0 16px 10px}.event{padding:0 0 15px 13px;border-left:1px solid #34435d;margin-left:3px;position:relative}.event:before{content:"";position:absolute;left:-3px;top:5px;width:5px;height:5px;background:#7597c7;border-radius:50%;box-shadow:0 0 0 4px var(--panel)}.event-top{display:flex;justify-content:space-between;gap:8px;font:8px var(--mono);color:#afc2e4}.event-top time{font-size:8px;color:#647c9f;white-space:nowrap}.event-body{font-size:9px;line-height:1.8;color:#829abf;overflow-wrap:anywhere;margin-top:4px}.notice{margin:0 24px 17px;padding:11px 15px;border:1px solid #3c4d6b;border-radius:8px;background:#152033;color:#a6bddf;font-size:11px;line-height:1.8;max-width:1852px}.notice.error{border-color:#6e3849;background:#281a25;color:#eeb6c1}.notice.success{border-color:#345a4c;background:#14261e;color:#9fd5bb}.footer{display:flex;justify-content:space-between;gap:15px;padding:0 28px 23px;color:#61738e;font:9px var(--mono)}.footer span:last-child{color:#52667f}
+    .execution-grid{display:grid;grid-template-columns:minmax(260px,1fr) minmax(240px,1fr);gap:20px;padding:0 18px 18px}.cycle-fields{margin:0}.cycle-field{display:grid;grid-template-columns:122px minmax(0,1fr);gap:8px;padding:8px 0;border-bottom:1px solid #263248;align-items:center}.cycle-field dt{font:8px var(--mono);color:#7e94b6}.cycle-field dd{margin:0;font-size:11px;overflow-wrap:anywhere;color:#c4d0e5}.cycle-field:last-child dd{font:9px var(--mono);color:#bfabff}.run-input-label{display:block;color:#9bacc8;font-size:10px;margin:0 0 7px}.run-input{width:100%;min-height:70px;resize:vertical;font:11px/1.8 var(--mono);color:var(--text);background:#0c1422;border:1px solid #34445f;border-radius:7px;padding:10px 12px}.run-input:focus-visible{outline:2px solid var(--blue);outline-offset:3px}.run-button{width:100%;margin-top:9px;background:#789de9;border-color:#94b2f3;color:#101b31;font-size:11px;font-weight:650}.run-button:hover:not(:disabled){background:#a0beff;color:#101b31}.run-evidence{margin:0 18px 18px;border:1px solid #365346;background:#14251d;border-radius:7px;padding:12px}.run-evidence .eyebrow{font-size:8px;color:#8fb7a2}.run-evidence pre{color:#b2ddc4;font:10px/1.8 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0}.execution-empty{padding:0 18px 18px;color:#8b9cb6;font-size:11px;line-height:1.9}.execution-caption{font-size:10px;color:#91a3c1;margin:10px 0 0;line-height:1.8}
+    @media(min-width:1900px){.header,.intro{padding-left:max(28px,calc((100vw - 1852px)/2));padding-right:max(28px,calc((100vw - 1852px)/2))}.notice{margin-left:auto;margin-right:auto}}
+    @media(max-width:1400px){.layout{grid-template-columns:220px minmax(0,1fr)}.right-column{grid-column:2;display:grid;grid-template-columns:1fr 1fr;align-items:start}.intro-formula{display:none}}
+    @media(max-width:850px){.header{padding:17px}.header-right .badge{display:none}.intro{padding:22px 18px}.intro h1{font-size:25px}.layout{grid-template-columns:1fr;padding:0 13px 20px;gap:13px}.left-column{display:grid;grid-template-columns:1fr 1fr;gap:12px}.left-column .identity-note{grid-column:1/-1}.actor-list{grid-template-columns:1fr 1fr;gap:3px}.actor-button{padding:6px;gap:6px}.actor-symbol{width:21px;height:21px;font-size:8px}.actor-name{font-size:9px}.actor-dot{display:none}.right-column{grid-column:1}.notice{margin:0 13px 14px}.board-toolbar{padding:13px 14px}.board-metrics{padding-left:14px;padding-right:14px}.board-table th,.board-table td{padding-left:9px;padding-right:9px}.location-banner{padding:13px 14px}.footer{padding:0 17px 20px}.footer span:last-child{display:none}}
+    @media(max-width:540px){.brand-name{font-size:12px;letter-spacing:2px}.brand-sub{font-size:7px}.runtime{font-size:9px}.left-column{display:flex}.actor-list{grid-template-columns:repeat(5,1fr)}.actor-button{justify-content:center;padding:8px 2px}.actor-symbol{display:none}.identity-note{padding:10px 14px}.identity-note p{margin-top:2px}.catalogue{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.right-column{display:flex}.board-title{font-size:14px}.board-actions{gap:4px}.small-button{font-size:9px;padding:6px}.location-right{font-size:8px}.location-right strong{font-size:9px}.location-title{font-size:12px}.board-table{min-width:640px}.dense .board-table{min-width:290px}.location-symbol{width:29px;height:29px}.url-form button{font-size:9px;padding:8px}.intro h1{font-size:23px}}
+    @media(max-width:650px){.execution-grid{grid-template-columns:1fr;gap:14px}.cycle-field{grid-template-columns:130px minmax(0,1fr)}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+    .connection-editor{padding:16px 18px;border-top:1px solid #2a3b54;background:#111e2e}.connection-editor h3{font-size:12px;margin:0 0 9px;color:#c6d6ef}.connection-editor form{display:grid;grid-template-columns:minmax(120px,1.4fr) minmax(90px,1fr) minmax(85px,.7fr) auto;gap:7px}.connection-editor input{width:100%;font-size:11px}.connection-editor .mix-button{margin-top:10px;width:100%;font-size:11px;background:#24354d;border-color:#4c6589}.connection-editor p{font-size:10px;line-height:1.8;color:#93a7c8;margin:9px 0 0}.connection-toggle{font-size:10px;padding:6px 8px;white-space:nowrap;background:#202c40;border-color:#465470;color:#c2d0e9}.connection-toggle.restore{background:#18382d;border-color:#35745c;color:#a4dfc6}.row-buttons{flex-wrap:wrap}.mix-workspace{color:#b9a6e6!important}@media(max-width:600px){.connection-editor form{grid-template-columns:1fr 1fr}.connection-editor form button{width:100%}}
+  </style>
+</head>
+<body>
+  <header class="header"><div class="brand"><div class="brand-mark" aria-hidden="true">Z</div><div><div class="brand-name">ZOOMCONNECT</div><div class="brand-sub">POSITION IDENTITY · LOCAL PROTOTYPE</div></div></div><div class="header-right"><div class="runtime"><span id="runtime-dot" class="runtime-dot"></span><span id="runtime-text">연결 확인 중</span></div><span class="badge">POSITION = IDENTITY</span></div></header>
+  <section class="intro"><div><div class="eyebrow">ONE COLLECTION. ONE SHARED PRINCIPLE.</div><h1>위치가 곧, 신원입니다.</h1><p>컬렉션 → 목록 → 칸. 줌바·브릿지·레이어·북마크를 같은 목록으로 다룹니다.</p></div><div class="intro-formula"><strong>컬렉션 위치 : 칸 위치</strong><br>내용이 바뀌어도 참조하는 위치는 그대로</div></section>
+  <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+  <main class="layout">
+    <aside class="column left-column" aria-label="주체와 컬렉션 목록">
+      <section class="panel"><div class="panel-head"><h2>이동 주체</h2><span class="panel-number">01</span></div><div class="panel-body"><div id="actors" class="actor-list"></div><p class="note">공개 세계의 권한은 같고, 사적 북마크와 혼합판은 각 주체만 접근합니다.</p></div></section>
+      <section class="panel"><div class="panel-head"><h2>컬렉션 목록</h2><span id="collection-count" class="panel-number">—</span></div><div class="panel-body"><div id="catalogue" class="catalogue"><div class="empty">컬렉션을 불러오는 중입니다.</div></div><p class="note">등록 위치를 보여주는 개요입니다.<br>이동은 현재 목록의 칸을 통해서만 합니다.</p></div></section>
+      <div class="identity-note"><strong>위치 = 신원</strong><p>칸의 내용을 교환해도 주소는 이동하지 않습니다. 버전은 오래된 목록의 조작을 막는 기준이며, 신원이 아닙니다.</p></div>
+      <section class="panel"><div class="panel-head"><h2>북마크 컬렉션</h2><span class="panel-number">BOOKMARK</span></div><div id="bookmark-boards"><div class="empty">북마크 목록을 기다리고 있습니다.</div></div></section>
+    </aside>
+    <div class="column center-column">
+      <section class="panel" aria-labelledby="main-title">
+        <div class="location-banner"><div class="location-heading"><span class="location-symbol" aria-hidden="true">⊞</span><div><div class="location-title">현재 위치 <span id="here" class="mono">—</span></div><div class="location-value">모든 주체는 ZOOMBAR로 이동합니다.</div></div></div><div class="location-right">읽은 컬렉션 버전<strong id="current-revision">—</strong></div></div>
+        <div class="board-toolbar"><div><h2 id="main-title" class="board-title">컬렉션에 연결하는 중</h2><div id="main-subtitle" class="board-subtitle">COLLECTION → LIST → POSITION</div></div><div class="board-actions"><button id="out" class="small-button" type="button">← ZOOM OUT</button><button id="root" class="small-button" type="button">출발점</button><button id="refresh" class="small-button" type="button" aria-label="서버의 현재 목록 새로 읽기">↻ 새로 읽기</button></div></div>
+        <div class="board-metrics"><span class="metric">컬렉션 위치 <strong id="collection-position">—</strong></span><span class="metric">선택 가능한 칸 <strong id="slot-count">—</strong></span><span class="metric violet">공통 주소 <strong id="address-format">b:s</strong></span></div>
+        <div id="main-board"><div class="empty">런타임의 실제 목록을 기다리고 있습니다.</div></div>
+        <div class="connection-editor">
+          <h3>공통 연결 · 혼합 · 분리 · 재연결</h3>
+          <form id="connection-form">
+            <input id="connection-title" aria-label="연결 제목" placeholder="연결 제목" required maxlength="256">
+            <input id="connection-target" aria-label="연결할 위치" placeholder="대상 위치 4:0" pattern="[0-9]+:[0-9]+" required>
+            <input id="connection-position" type="number" min="1" step="1" aria-label="재사용할 빈 칸 위치" placeholder="빈 칸 / 생략">
+            <button type="submit">연결 추가</button>
+          </form>
+          <button id="mix" class="mix-button" type="button">BRIDGE · LAYER · BOOKMARK 함께 연결</button>
+          <p>현재 목록에 연결 칸을 추가합니다. 이동은 선택 후 ZOOMBAR로 수행합니다. 분리는 칸과 대상을 보존하며, 다시 연결하면 같은 위치가 활성화됩니다.</p>
+          <p id="mix-workspace-info" class="mix-workspace"></p>
+        </div>
+        <div class="revision-note"><strong>0번 칸은 자기 헤더입니다.</strong> 선택 목록은 1번 칸부터 시작합니다. 이동·교환 요청에는 현재 읽은 버전을 함께 전달합니다.</div>
+        <div id="changes" class="changes" hidden><h3>같은 주소, 바뀐 내용</h3><div id="change-list"></div><p class="note">참조는 원래 위치에 남습니다. 그 위치에서 읽는 내용이 바뀐 것입니다.</p></div>
+        <div class="edit-note"><strong>초기 구성 데모 권한</strong> · 위/아래 버튼은 해당 컬렉션의 두 칸 내용을 교환합니다. 운영 MASTER 승인 체계는 이 화면에 구현되지 않았습니다.</div>
+        <div class="url-box"><div class="path-label">ZOOMBAR · 현재 방문 위치</div><nav id="path" class="path" aria-label="ZOOMBAR 방문 경로"></nav><form id="url-form" class="url-form"><input id="url-input" type="text" spellcheck="false" autocomplete="off" aria-label="위치 기반 이동 URL" placeholder="런타임의 이동 URL"><button type="submit">경로 걷기 ↗</button></form></div>
+      </section>
+      <section class="panel" aria-labelledby="execution-title">
+        <div class="panel-head"><h2 id="execution-title">공통 HASH 실행 · ZOOMCYCLE</h2><span id="contract-version" class="panel-number">계약 대기</span></div>
+        <div id="execution-empty" class="execution-empty">현재 위치에 실행 계약이 없습니다. 계약이 등록된 세계로 이동하면 같은 실행 진입점을 사용합니다.</div>
+        <div id="execution-grid" class="execution-grid" hidden><dl id="cycle-fields" class="cycle-fields"></dl><div><label class="run-input-label" for="run-data">입력 데이터 · JSON 숫자 목록</label><textarea id="run-data" class="run-input" spellcheck="false">[4500, 3800, 5200]</textarea><button id="run" class="run-button" type="button">ZOOMCYCLE_CODE 실행 ↗</button><p class="execution-caption">단일 PARAMETER_HASH로 실행하며 결과도 HASH로 기록합니다. 아래에는 서버가 실제 반환한 증거만 표시합니다.</p></div></div>
+        <div id="run-evidence" class="run-evidence" hidden><div class="eyebrow">RECORDED RESULT · HASH EVIDENCE</div><pre id="run-result"></pre></div>
+      </section>
+    </div>
+    <aside class="column right-column" aria-label="ZOOMBAR와 실행 기록">
+      <section class="panel"><div class="panel-head"><h2>나의 ZOOMBAR 컬렉션</h2><span class="panel-number">02</span></div><div class="own-path"><span class="muted">지금 서 있는 위치</span><span id="zoombar-here" class="address">—</span></div><div id="zoombar-board"><div class="empty">방문 칸을 불러오는 중입니다.</div></div><div class="board-note">방문 이력도 같은 컬렉션의 칸입니다.<br>돌아갈 때는 ZOOM OUT을 사용합니다.</div></section>
+      <section class="panel"><div class="panel-head"><h2>실제 변경 기록</h2><span class="panel-number">03</span></div><div class="ledger-status"><span id="ledger-icon" class="ledger-icon" aria-hidden="true">·</span><div><span id="ledger-label">해시체인 검사 대기</span><div id="ledger-meta" class="ledger-meta">RUNTIME EVIDENCE</div></div></div><div id="timeline" class="timeline"><div class="empty">아직 읽은 기록이 없습니다.</div></div></section>
+    </aside>
+  </main>
+  <footer class="footer"><span>격리된 로컬 데모 · 실제 서비스 연결 없음</span><span>POSITION IS IDENTITY · EVERY MOVE THROUGH ZOOMBAR</span></footer>
+  <script>
+    'use strict';
+    const $ = (id) => document.getElementById(id);
+    const labels = {USER:'사용자',AI:'AI',MASTER:'MASTER',AGENT:'에이전트',CODE:'코드'};
+    let state = null;
+    let actor = 'USER';
+    let busy = false;
+    let changes = [];
+    let changeCollection = null;
+    let runEvidence;
+
+    function el(tag, className = '', text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = String(text);
+      return node;
+    }
+    function address(value) {
+      if (!Array.isArray(value) || value.length !== 2) return '—';
+      return String(value[0]) + ':' + String(value[1]);
+    }
+    function revision(board) { return board && board.revision !== undefined ? 'v' + String(board.revision) : '—'; }
+    function slotPosition(slot) { return Number(slot.position); }
+    function bodySlots(board) { return [...(board.slots || [])].filter((slot) => slotPosition(slot) > 0).sort((a,b) => slotPosition(a)-slotPosition(b)); }
+    function slotAddress(board,slot) { return Array.isArray(slot.address) ? slot.address : [board.collection,slot.position]; }
+    function sameAddress(a,b) { return address(a) === address(b); }
+    function notify(text, kind = '') { $('notice').className = 'notice ' + kind; $('notice').textContent = text; $('notice').hidden = !text; }
+    function lock(value) {
+      busy = value;
+      document.querySelectorAll('button,input,textarea').forEach((node) => {
+        node.disabled = value || node.dataset.unavailable === 'true';
+      });
+      $('main-board').setAttribute('aria-busy',String(value));
+    }
+    async function responseJson(response) {
+      const data = await response.json();
+      if (!response.ok || data.error) {
+        const error = data.error || {code:'HTTP_' + response.status,message:'요청을 처리하지 못했습니다.'};
+        throw new Error(String(error.code || 'ERROR') + ' · ' + String(error.message || error));
+      }
+      return data;
+    }
+    async function fetchState(selectedActor) {
+      return responseJson(await fetch('/api/state?actor=' + encodeURIComponent(selectedActor),{credentials:'same-origin',cache:'no-store'}));
+    }
+    async function load(selectedActor = actor) {
+      if (busy) return;
+      lock(true);
+      try {
+        state = await fetchState(selectedActor);
+        actor = selectedActor;
+        changes = [];
+        changeCollection = null;
+        runEvidence = undefined;
+        render();
+        notify('');
+      } catch (error) {
+        $('runtime-text').textContent = '연결 확인 필요';
+        $('runtime-dot').className = 'runtime-dot';
+        notify(error.message,'error');
+      } finally { lock(false); }
+    }
+    function fingerprint(slot) {
+      return JSON.stringify({title:slot.title,kind:slot.kind,target:slot.target,enabled:slot.enabled,empty:slot.empty});
+    }
+    function detectChanges(before,after) {
+      if (!before || !after || before.collection !== after.collection) return [];
+      const old = new Map(bodySlots(before).map((slot) => [slotPosition(slot),slot]));
+      return bodySlots(after).filter((slot) => old.has(slotPosition(slot)) && fingerprint(old.get(slotPosition(slot))) !== fingerprint(slot)).map((slot) => ({
+        address:slotAddress(after,slot),
+        before:old.get(slotPosition(slot)).title || '빈 칸',
+        after:slot.title || '빈 칸',
+        beforeTarget:old.get(slotPosition(slot)).target,
+        afterTarget:slot.target
+      }));
+    }
+    async function act(action, payload = {}) {
+      if (busy) return;
+      const before = state && state.view;
+      lock(true);
+      try {
+        const data = await responseJson(await fetch('/api/action',{
+          method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({actor,action,...payload})
+        }));
+        state = data;
+        changes = ['reorder','separate','reconnect'].includes(action) ? detectChanges(before,data.view) : [];
+        changeCollection = changes.length ? data.view.collection : null;
+        runEvidence = undefined;
+        if (action === 'run') {
+          runEvidence = {};
+          for (const key of ['last_result','parameter_hash','result_hash','returned_none']) {
+            if (Object.prototype.hasOwnProperty.call(data,key)) runEvidence[key] = data[key];
+          }
+        }
+        render();
+        const message = action === 'reorder' ? '서버의 새 목록을 읽었습니다. 주소와 내용의 변화를 아래에서 확인하세요.' : 'ZOOMBAR의 실제 위치와 기록이 갱신되었습니다.';
+        notify(data.status || message,'success');
+      } catch (error) {
+        const original = error.message;
+        try { state = await fetchState(actor); changes = []; changeCollection = null; runEvidence = undefined; render(); }
+        catch (_) { /* Keep the original action error and the last confirmed state. */ }
+        notify(original + ' · 목록이 바뀌었다면 새로 읽은 버전으로 다시 선택하세요.','error');
+      } finally { lock(false); }
+    }
+    function actorPanel() {
+      const list = $('actors');
+      list.replaceChildren();
+      for (const name of state.actors || []) {
+        const button = el('button','actor-button');
+        button.type = 'button';
+        button.setAttribute('aria-pressed',String(name === actor));
+        button.setAttribute('aria-label',(labels[name] || name) + '의 독립 ZOOMBAR 보기');
+        button.append(el('span','actor-symbol',name.slice(0,2)),el('span','actor-name',labels[name] || name));
+        if (name === actor) button.append(el('span','actor-dot','●'));
+        button.addEventListener('click',() => load(name));
+        list.append(button);
+      }
+    }
+    function cataloguePanel() {
+      const list = $('catalogue');
+      list.replaceChildren();
+      const collections = state.collections || [];
+      $('collection-count').textContent = String(collections.length).padStart(2,'0');
+      for (const board of collections) {
+        const row = el('div','catalogue-row');
+        const caption = el('div','catalogue-caption');
+        caption.append(el('span','',board.title || '제목 없음'),el('span','address',address(board.address || [board.collection,0])));
+        row.append(caption,el('div','catalogue-detail',String(board.kind || 'COLLECTION') + ' · ' + revision(board)));
+        list.append(row);
+      }
+      if (!collections.length) list.append(el('div','empty','조회한 컬렉션이 없습니다.'));
+    }
+
+    // One renderer for every board. Kind is a displayed value, never a movement rule.
+    // Options describe the viewing context, not a collection's kind.
+    function boardTable(board, options = {}) {
+      const wrapper = el('div','board-wrapper' + (options.dense ? ' dense' : ''));
+      const scroll = el('div','board-scroll');
+      const table = el('table','board-table');
+      table.setAttribute('aria-label',(board.title || '컬렉션') + ' · 위치별 목록');
+      const caption = el('caption','');
+      caption.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap';
+      caption.textContent = '컬렉션 위치 ' + board.collection + ', ' + revision(board) + '. 0번은 자기 헤더이고 선택 목록은 1번부터입니다.';
+      table.append(caption);
+      const columns = options.dense ? ['칸','주소 · 내용','참조 위치'] : ['칸','주소','내용','종류','이동 참조','상태'];
+      if (options.history) columns.push('경유 위치');
+      if (options.choose || options.editable) columns.push('');
+      const head = el('thead');
+      const header = el('tr');
+      for (const column of columns) { const th = el('th','',column); th.scope = 'col'; header.append(th); }
+      head.append(header);table.append(head);
+      const body = el('tbody');
+      const suppliedHeader = (board.slots || []).find((slot) => slotPosition(slot) === 0);
+      const selfHeader = suppliedHeader || {position:0,address:[board.collection,0],title:board.title,kind:board.kind,target:[board.collection,0],enabled:true};
+      const slots = bodySlots(board);
+      const rows = [selfHeader,...slots];
+      for (const slot of rows) {
+        const zero = slotPosition(slot) === 0;
+        const changed = !zero && board.collection === changeCollection && changes.some((item) => sameAddress(item.address,slotAddress(board,slot)));
+        const row = el('tr',(zero ? 'slot-zero' : '') + (changed ? ' changed' : ''));
+        const pos = el('td');pos.append(el('span','slot-position',slot.position));row.append(pos);
+        const currentAddress = slotAddress(board,slot);
+        const title = zero ? (slot.title || board.title || '자기 헤더') : slot.empty ? '빈 칸' : slot.title || '제목 없음';
+        const addressCell = el('td');
+        addressCell.append(el('span','address',address(currentAddress)));
+        if (options.dense) {
+          addressCell.append(el('div','row-title',title),el('div','row-meta',zero ? 'SELF HEADER' : String(slot.kind || '—')));
+          if (changed) addressCell.append(el('span','changed-tag','내용 변경 · 주소 유지'));
+        }
+        row.append(addressCell);
+        if (!options.dense) {
+          const titleCell = el('td');titleCell.append(el('div','row-title',title));
+          if (zero) titleCell.append(el('div','row-meta','SELF HEADER · 선택하지 않는 자기 위치'));
+          if (changed) titleCell.append(el('span','changed-tag','내용 변경 · 주소 유지'));
+          row.append(titleCell);
+          const kindCell = el('td');kindCell.append(el('span','kind',slot.kind || '—'));row.append(kindCell);
+        }
+        const targetCell = el('td');targetCell.append(el('span','address',address(slot.target)));row.append(targetCell);
+        if (!options.dense) {
+          const status = zero ? '자기 헤더' : slot.empty ? '빈 칸' : slot.enabled === false ? '꺼짐' : slot.traversable ? '이동 가능' : '보기';
+          row.append(el('td','row-state ' + (slot.traversable && !zero ? 'ready' : slot.enabled === false ? 'off' : ''),status));
+        }
+        if (options.history) row.append(el('td','address',address(slot.via || slot.via_address || (slot.metadata && slot.metadata.via_address))));
+        if (options.choose || options.editable) {
+          const actions = el('td');
+          const buttons = el('div','row-buttons');
+          if (options.editable && !zero) {
+            const group = el('div','reorder-buttons');
+            const index = slots.indexOf(slot);
+            for (const [symbol,offset,label] of [['↑',-1,'위 칸과 내용 교환'],['↓',1,'아래 칸과 내용 교환']]) {
+              const button = el('button','reorder-button',symbol);
+              button.type = 'button';
+              const neighbor = slots[index+offset];
+              button.disabled = !neighbor;
+              button.dataset.unavailable = String(!neighbor);
+              button.setAttribute('aria-label',address(currentAddress) + ' · ' + label);
+              button.title = neighbor ? address(currentAddress) + ' ↔ ' + address(slotAddress(board,neighbor)) : '교환할 이웃 칸 없음';
+              button.addEventListener('click',() => act('reorder',{collection:board.collection,from_position:slot.position,to_position:neighbor.position,expected_revision:board.revision}));
+              group.append(button);
+            }
+            buttons.append(group);
+            if (!slot.empty) {
+              const restore = slot.enabled === false;
+              const toggle = el('button','connection-toggle' + (restore ? ' restore' : ''),restore ? '다시 연결' : '분리');
+              toggle.type = 'button';
+              toggle.setAttribute('aria-label',address(currentAddress) + (restore ? ' · 같은 칸 다시 연결' : ' · 연결 분리'));
+              toggle.addEventListener('click',() => act(restore ? 'reconnect' : 'separate',{position:slot.position,expected_revision:board.revision}));
+              buttons.append(toggle);
+            }
+          }
+          if (options.choose && !zero) {
+            const button = el('button','enter-button','선택 ↗');
+            const unavailable = slot.empty || slot.enabled === false || (!options.reference && slot.traversable === false);
+            button.type = 'button';button.disabled = !!unavailable;button.dataset.unavailable = String(!!unavailable);
+            button.setAttribute('aria-label',address(currentAddress) + ' · ' + title + ' 선택');
+            button.addEventListener('click',() => options.choose(board,slot));
+            buttons.append(button);
+          }
+          actions.append(buttons);row.append(actions);
+        }
+        body.append(row);
+      }
+      table.append(body);scroll.append(table);wrapper.append(scroll);
+      if (!slots.length) wrapper.append(el('div','empty','이 컬렉션에는 아직 선택할 칸이 없습니다.'));
+      return wrapper;
+    }
+    function compactBoard(board, options = {}) {
+      const wrapper = el('div','compact-board');
+      const heading = el('div','compact-board-head');
+      const title = el('div');title.append(el('strong','',board.title || '컬렉션'),el('small','',address([board.collection,0]) + ' · ' + String(board.kind || 'COLLECTION')));
+      heading.append(title,el('span','board-version',revision(board)));
+      wrapper.append(heading,boardTable(board,{...options,dense:true}));
+      return wrapper;
+    }
+    function mainPanel() {
+      const board = state.view;
+      $('here').textContent = address(state.here);
+      $('zoombar-here').textContent = address(state.here);
+      $('current-revision').textContent = revision(board);
+      $('main-title').textContent = board.title || '컬렉션';
+      $('main-subtitle').textContent = 'COLLECTION ' + String(board.collection) + ' · ' + String(board.kind || 'COLLECTION');
+      $('collection-position').textContent = board.collection;
+      $('slot-count').textContent = String(bodySlots(board).length);
+      $('address-format').textContent = String(board.collection) + ':s';
+      $('mix-workspace-info').textContent = state.workspace ? '나의 혼합판 ' + address(state.workspace) + ' · 출발 목록에서 “' + actor + ' 혼합 작업판 열기”를 선택하세요.' : '';
+      $('mix').dataset.unavailable = String(!Array.isArray(state.mix_targets) || !state.mix_targets.length);
+      $('main-board').replaceChildren(boardTable(board,{
+        editable:true,
+        choose:(current,slot) => act('open',{position:slot.position,expected_revision:current.revision})
+      }));
+      const changeList = $('change-list');changeList.replaceChildren();
+      $('changes').hidden = !changes.length;
+      for (const item of changes) {
+        const line = el('div','change-item');
+        line.append(el('span','address',address(item.address)),document.createTextNode('  ' + item.before + ' → ' + item.after));
+        const detail = el('div','note','참조 내용: ' + address(item.beforeTarget) + ' → ' + address(item.afterTarget));
+        line.append(detail);changeList.append(line);
+      }
+      const path = $('path');path.replaceChildren();
+      (state.path || []).forEach((position,index,positions) => {
+        if (index) path.append(el('span','path-divider','›'));
+        const item = el('span','path-item' + (index === positions.length-1 ? ' current' : ''),address(position));
+        if (index === positions.length-1) item.setAttribute('aria-current','location');
+        path.append(item);
+      });
+      $('url-input').value = state.url || '';
+    }
+    function bookmarkPanel() {
+      const host = $('bookmark-boards');host.replaceChildren();
+      for (const board of state.bookmarks || []) {
+        host.append(compactBoard(board,{
+          reference:true,
+          choose:(current,slot) => act('bookmark',{collection:current.collection,position:slot.position,expected_revision:current.revision})
+        }));
+      }
+      if (!host.childElementCount) host.append(el('div','empty','등록된 북마크 컬렉션이 없습니다.'));
+    }
+    function zoombarPanel() {
+      const host = $('zoombar-board');host.replaceChildren();
+      if (state.zoombar) host.append(compactBoard(state.zoombar,{history:true}));
+      else host.append(el('div','empty','ZOOMBAR 컬렉션이 아직 없습니다.'));
+    }
+    function historyPanel() {
+      const integrity = state.integrity;
+      const valid = integrity && integrity.valid === true;
+      $('ledger-icon').textContent = integrity ? valid ? '✓' : '!' : '·';
+      $('ledger-icon').style.color = integrity && !valid ? 'var(--red)' : 'var(--green)';
+      $('ledger-label').textContent = integrity ? valid ? '해시체인 검사 일치' : '해시체인 불일치 감지' : '해시체인 검사 대기';
+      $('ledger-meta').textContent = integrity ? String(integrity.events) + ' EVENTS · 실제 검사 결과' : 'RUNTIME EVIDENCE';
+      const host = $('timeline');host.replaceChildren();
+      const events = [...(state.history || [])].sort((a,b) => Number(b.sequence || 0)-Number(a.sequence || 0));
+      for (const event of events.slice(0,16)) {
+        const row = el('div','event');
+        const heading = el('div','event-top');
+        const date = new Date(event.timestamp);
+        const clock = Number.isNaN(date.getTime()) ? '' : date.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+        heading.append(el('span','',event.kind),el('time','',clock));
+        const detail = Object.entries(event.body || {}).map(([key,value]) => key + ': ' + (typeof value === 'string' ? value : JSON.stringify(value))).join(' · ');
+        row.append(heading,el('div','event-body',detail));host.append(row);
+      }
+      if (!events.length) host.append(el('div','empty','이 주체의 기록이 아직 없습니다. 목록의 칸을 선택해 이동해 보세요.'));
+    }
+    function executionPanel() {
+      const contract = (state.contracts || [])[0];
+      const fields = $('cycle-fields');fields.replaceChildren();
+      $('execution-empty').hidden = !!contract;
+      $('execution-grid').hidden = !contract;
+      $('contract-version').textContent = contract ? 'CONTRACT v' + String(contract.version) : '계약 없음';
+      if (contract) {
+        for (const key of ['BASE_PIN','COMMON_ACTION','INNER_LENS','UNIQUE_ACTION','ZOOMCYCLE_CODE']) {
+          const row = el('div','cycle-field');
+          const raw = key === 'ZOOMCYCLE_CODE' ? '공통 실행 진입점' : contract[key];
+          const value = Array.isArray(raw) && raw.length === 2 ? address(raw) : typeof raw === 'object' ? JSON.stringify(raw) : raw;
+          row.append(el('dt','',key),el('dd','',value === undefined ? '—' : value));fields.append(row);
+        }
+      }
+      $('run-evidence').hidden = runEvidence === undefined;
+      $('run-result').textContent = runEvidence === undefined ? '' : JSON.stringify(runEvidence,null,2);
+    }
+    function render() {
+      $('runtime-text').textContent = '위치 런타임 연결';
+      $('runtime-dot').className = 'runtime-dot online';
+      actorPanel();cataloguePanel();mainPanel();bookmarkPanel();zoombarPanel();historyPanel();executionPanel();
+    }
+    $('out').addEventListener('click',() => act('out'));
+    $('root').addEventListener('click',() => act('root'));
+    $('refresh').addEventListener('click',() => load());
+    $('mix').addEventListener('click',() => {
+      if (busy || !state || !state.mix_targets) return;
+      act('mix',{entries:state.mix_targets,expected_revision:state.view.revision});
+    });
+    $('connection-form').addEventListener('submit',(event) => {
+      event.preventDefault();
+      if (busy || !state) return;
+      const target = $('connection-target').value.trim().split(':').map(Number);
+      const payload = {title:$('connection-title').value.trim(),target,expected_revision:state.view.revision};
+      const rawPosition = $('connection-position').value.trim();
+      if (rawPosition) payload.position = Number(rawPosition);
+      if (target.length !== 2 || target.some((n) => !Number.isSafeInteger(n) || n < 0) || !payload.title || (rawPosition && (!Number.isSafeInteger(payload.position) || payload.position < 1))) {
+        notify('INPUT_FORMAT · 제목과 0 이상의 컬렉션:칸 위치를 입력하세요. 빈 칸 위치는 1 이상의 정수입니다.','error');
+        return;
+      }
+      act('connect',payload);
+    });
+    $('url-form').addEventListener('submit',(event) => { event.preventDefault(); act('walk',{url:$('url-input').value}); });
+    $('run').addEventListener('click',() => {
+      if (busy) return;
+      const contract = (state.contracts || [])[0];
+      if (!contract) return;
+      try { const data = JSON.parse($('run-data').value); act('run',{contract,data}); }
+      catch (_) { notify('INPUT_FORMAT · 숫자 목록을 JSON으로 입력하세요. 예: [4500, 3800, 5200]','error'); }
+    });
+    load();
+  </script>
+</body>
+</html>
